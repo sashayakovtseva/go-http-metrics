@@ -6,6 +6,7 @@ import (
 	"errors"
 	"net"
 	"net/http"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/slok/go-http-metrics/middleware"
@@ -42,7 +43,7 @@ func (s *reporter) URLPath() string {
 	path := s.r.URL.Path
 
 	if ctx := chi.RouteContext(s.r.Context()); ctx != nil {
-		return ctx.RoutePattern()
+		return strings.TrimRight(ctx.RoutePattern(), "/")
 	}
 
 	return path
