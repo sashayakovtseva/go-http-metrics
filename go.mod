@@ -7,7 +7,7 @@ require (
 	github.com/emicklei/go-restful/v3 v3.7.3
 	github.com/fasthttp/router v1.4.6
 	github.com/gin-gonic/gin v1.7.7
-	github.com/go-chi/chi v4.1.2+incompatible
+	github.com/go-chi/chi/v5 v5.0.7
 	github.com/gorilla/mux v1.8.0
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/justinas/alice v1.2.0
@@ -36,6 +36,7 @@ require (
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/flosch/pongo2/v4 v4.0.2 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
+	github.com/go-chi/chi v1.5.4 // indirect
 	github.com/go-kit/log v0.1.0 // indirect
 	github.com/go-logfmt/logfmt v0.5.0 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect
