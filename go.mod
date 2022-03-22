@@ -7,7 +7,7 @@ require (
 	github.com/emicklei/go-restful/v3 v3.7.3
 	github.com/fasthttp/router v1.4.6
 	github.com/gin-gonic/gin v1.7.7
-	github.com/go-chi/chi v4.1.2+incompatible
+	github.com/go-chi/chi/v5 v5.0.7
 	github.com/gorilla/mux v1.8.0
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/justinas/alice v1.2.0
