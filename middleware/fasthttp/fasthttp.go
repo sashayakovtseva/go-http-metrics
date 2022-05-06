@@ -34,6 +34,9 @@ func (r reporter) URLPath() string {
 }
 
 func (r reporter) StatusCode() int {
+	if r.c.LastTimeoutErrorResponse() != nil {
+		return fasthttp.StatusRequestTimeout
+	}
 	return r.c.Response.StatusCode()
 }
 
