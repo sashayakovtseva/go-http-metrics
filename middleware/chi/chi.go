@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/go-chi/chi/v5"
+
 	"github.com/slok/go-http-metrics/middleware"
 )
 

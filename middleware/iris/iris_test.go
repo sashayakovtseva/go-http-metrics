@@ -82,7 +82,7 @@ func TestMiddleware(t *testing.T) {
 			handler: func() iris.Handler {
 				return func(ctx iris.Context) {
 					ctx.StatusCode(iris.StatusAccepted)
-					ctx.JSON(map[string]string{"test": "one"}) // nolint: errcheck
+					ctx.JSON(map[string]string{"test": "one"}) //nolint:errcheck
 				}
 			},
 			expRespCode: 202,

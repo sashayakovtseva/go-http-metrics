@@ -49,8 +49,8 @@ func TestMiddleware(t *testing.T) {
 			},
 			handler: func() http.Handler {
 				return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-					w.WriteHeader(202)
-					w.Write([]byte("Я бэтмен")) // nolint: errcheck
+					w.WriteHeader(http.StatusAccepted)
+					w.Write([]byte("Я бэтмен")) //nolint:errcheck
 				})
 			},
 			expRespCode: 202,
@@ -119,8 +119,8 @@ func TestProvider(t *testing.T) {
 			},
 			handler: func() http.Handler {
 				return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-					w.WriteHeader(202)
-					w.Write([]byte("Я бэтмен")) // nolint: errcheck
+					w.WriteHeader(http.StatusAccepted)
+					w.Write([]byte("Я бэтмен")) //nolint:errcheck
 				})
 			},
 			expRespCode: 202,

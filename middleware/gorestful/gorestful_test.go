@@ -51,7 +51,7 @@ func TestMiddleware(t *testing.T) {
 			handler: func() gorestful.RouteFunction {
 				return gorestful.RouteFunction(func(_ *gorestful.Request, resp *gorestful.Response) {
 					resp.WriteHeader(202)
-					resp.Write([]byte("test1")) // nolint: errcheck
+					resp.Write([]byte("test1")) //nolint:errcheck
 				})
 			},
 			expRespCode: 202,

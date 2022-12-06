@@ -51,8 +51,8 @@ func TestMiddleware(t *testing.T) {
 			},
 			handler: func() httprouter.Handle {
 				return httprouter.Handle(func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-					w.WriteHeader(202)
-					w.Write([]byte("test1")) // nolint: errcheck
+					w.WriteHeader(http.StatusAccepted)
+					w.Write([]byte("test1")) //nolint:errcheck
 				})
 			},
 			expRespCode: 202,
