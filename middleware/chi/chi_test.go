@@ -1,7 +1,7 @@
 package chi_test
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -48,8 +48,8 @@ func TestMiddleware(t *testing.T) {
 			},
 			handler: func() http.HandlerFunc {
 				return func(w http.ResponseWriter, r *http.Request) {
-					w.WriteHeader(202)
-					w.Write([]byte("test1")) // nolint: errcheck
+					w.WriteHeader(http.StatusAccepted)
+					w.Write([]byte("test1")) //nolint:errcheck
 				}
 			},
 			expRespCode: 202,
@@ -74,7 +74,7 @@ func TestMiddleware(t *testing.T) {
 			// Check.
 			mr.AssertExpectations(t)
 			assert.Equal(t, test.expRespCode, resp.Result().StatusCode)
-			gotBody, err := ioutil.ReadAll(resp.Result().Body)
+			gotBody, err := io.ReadAll(resp.Result().Body)
 			require.NoError(t, err)
 			assert.Equal(t, test.expRespBody, string(gotBody))
 		})

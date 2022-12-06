@@ -1,7 +1,7 @@
 package integration
 
 import (
-	"io/ioutil"
+	"io"
 	"net"
 	"net/http"
 	"net/http/httptest"
@@ -128,7 +128,7 @@ func testMiddlewareRequests(t *testing.T, server server, expReqs []handlerConfig
 
 			// Check.
 			assert.Equal(config.Code, resp.StatusCode)
-			b, err := ioutil.ReadAll(resp.Body)
+			b, err := io.ReadAll(resp.Body)
 			require.NoError(err)
 			assert.Equal(config.ReturnData, string(b))
 		}
@@ -150,7 +150,7 @@ func testMiddlewarePrometheusMetrics(t *testing.T, h http.Handler, expMetrics []
 	require.NoError(err)
 
 	// Check.
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	require.NoError(err)
 	metrics := string(b)
 
@@ -173,7 +173,7 @@ func prepareHandlerSTD(m middleware.Middleware, hc []handlerConfig) server {
 
 			time.Sleep(h.SleepDuration)
 			w.WriteHeader(h.Code)
-			w.Write([]byte(h.ReturnData)) // nolint: errcheck
+			w.Write([]byte(h.ReturnData)) //nolint:errcheck
 		}))
 	}
 
@@ -196,7 +196,7 @@ func prepareHandlerNegroni(m middleware.Middleware, hc []handlerConfig) server {
 
 			time.Sleep(h.SleepDuration)
 			w.WriteHeader(h.Code)
-			w.Write([]byte(h.ReturnData)) // nolint: errcheck
+			w.Write([]byte(h.ReturnData)) //nolint:errcheck
 		}))
 	}
 
@@ -217,7 +217,7 @@ func prepareHandlerHTTPRouter(m middleware.Middleware, hc []handlerConfig) serve
 		hr := func(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 			time.Sleep(h.SleepDuration)
 			w.WriteHeader(h.Code)
-			w.Write([]byte(h.ReturnData)) // nolint: errcheck
+			w.Write([]byte(h.ReturnData)) //nolint:errcheck
 		}
 
 		// Setup middleware on each of the routes.
@@ -239,7 +239,7 @@ func prepareHandlerGorestful(m middleware.Middleware, hc []handlerConfig) server
 		ws.Route(ws.Method(h.Method).Path(h.Path).To(func(_ *gorestful.Request, resp *gorestful.Response) {
 			time.Sleep(h.SleepDuration)
 			resp.WriteHeader(h.Code)
-			resp.Write([]byte(h.ReturnData)) // nolint: errcheck
+			resp.Write([]byte(h.ReturnData)) //nolint:errcheck
 		}))
 	}
 	c.Add(ws)
@@ -292,7 +292,7 @@ func prepareHandlerGoji(m middleware.Middleware, hc []handlerConfig) server {
 		mux.HandleFunc(pat.NewWithMethods(h.Path, h.Method), http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			time.Sleep(h.SleepDuration)
 			w.WriteHeader(h.Code)
-			w.Write([]byte(h.ReturnData)) // nolint: errcheck
+			w.Write([]byte(h.ReturnData)) //nolint:errcheck
 		}))
 	}
 
@@ -310,7 +310,7 @@ func prepareHandlerChi(m middleware.Middleware, hc []handlerConfig) server {
 		mux.Method(h.Method, h.Path, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			time.Sleep(h.SleepDuration)
 			w.WriteHeader(h.Code)
-			w.Write([]byte(h.ReturnData)) // nolint: errcheck
+			w.Write([]byte(h.ReturnData)) //nolint:errcheck
 		}))
 	}
 
@@ -330,7 +330,7 @@ func prepareHandlerAlice(m middleware.Middleware, hc []handlerConfig) server {
 
 			time.Sleep(h.SleepDuration)
 			w.WriteHeader(h.Code)
-			w.Write([]byte(h.ReturnData)) // nolint: errcheck
+			w.Write([]byte(h.ReturnData)) //nolint:errcheck
 		}))
 	}
 
@@ -350,7 +350,7 @@ func prepareHandlerGorilla(m middleware.Middleware, hc []handlerConfig) server {
 			HandlerFunc(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				time.Sleep(h.SleepDuration)
 				w.WriteHeader(h.Code)
-				w.Write([]byte(h.ReturnData)) // nolint: errcheck
+				w.Write([]byte(h.ReturnData)) //nolint:errcheck
 			}))
 	}
 
@@ -380,7 +380,7 @@ func prepareHandlerFastHTTP(m middleware.Middleware, hc []handlerConfig) server 
 	// a custom net TCP listener so we can obtain the random port URL.
 	ln, _ := net.Listen("tcp", "127.0.0.1:0") // `:0` for random port.
 	go func() {
-		fasthttp.Serve(ln, fasthttpHandler) // nolint: errcheck
+		fasthttp.Serve(ln, fasthttpHandler) //nolint:errcheck
 	}()
 
 	return netListenerServer{ln: ln}
@@ -397,11 +397,11 @@ func prepareHandlerIris(m middleware.Middleware, hc []handlerConfig) server {
 		app.Handle(h.Method, h.Path, iris.Handler(func(ctx iris.Context) {
 			time.Sleep(h.SleepDuration)
 			ctx.StatusCode(h.Code)
-			ctx.WriteString(h.ReturnData) // nolint: errcheck
+			ctx.WriteString(h.ReturnData) //nolint:errcheck
 		}))
 	}
 
-	app.Build() // nolint: errcheck
+	app.Build() //nolint:errcheck
 
 	return testServer{server: httptest.NewServer(app)}
 }

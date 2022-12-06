@@ -36,7 +36,7 @@ func main() {
 	})
 
 	app.Get("/json", func(ctx iris.Context) {
-		ctx.JSON(map[string]string{"hello": "world"}) // nolint: errcheck
+		ctx.JSON(map[string]string{"hello": "world"}) //nolint:errcheck
 	})
 
 	app.Get("/wrong", func(ctx iris.Context) {
