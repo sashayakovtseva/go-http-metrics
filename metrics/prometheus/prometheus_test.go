@@ -2,7 +2,7 @@ package prometheus_test
 
 import (
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -232,7 +232,7 @@ func TestPrometheusRecorder(t *testing.T) {
 
 			// Check all metrics are present.
 			if assert.Equal(t, http.StatusOK, resp.StatusCode) {
-				body, _ := ioutil.ReadAll(resp.Body)
+				body, _ := io.ReadAll(resp.Body)
 				for _, expMetric := range test.expMetrics {
 					assert.Contains(t, string(body), expMetric, "metric not present on the result")
 				}
